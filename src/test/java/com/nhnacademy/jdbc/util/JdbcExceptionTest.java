@@ -23,7 +23,7 @@ public class JdbcExceptionTest {
 
         SQLException sqlException = Assertions.assertThrows(SQLException.class,()->{
             Statement statement = connection.createStatement();
-            statement.execute(sql);
+            statement.executeUpdate(sql);
         });
 
         log.info("errorCode:{}",sqlException.getErrorCode());
