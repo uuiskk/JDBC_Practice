@@ -62,9 +62,17 @@ public class BasicConnectionPool  {
         }
     }
 
-    public int size(){
+    public int getUsedConnectionSize(){
         synchronized (this) {
             return this.maximumPoolSize - connections.size();
         }
+    }
+
+    public void distory() throws SQLException {
+       for(Connection connection : connections){
+           if(!connection.isClosed()){
+               connection.close();
+           }
+       }
     }
 }
