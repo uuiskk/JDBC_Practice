@@ -1,33 +1,15 @@
 package com.nhnacademy.jdbc.student.repository;
 
-import com.nhnacademy.jdbc.student.dto.StudentDto;
-import com.nhnacademy.jdbc.util.DbUtils;
-import lombok.extern.slf4j.Slf4j;
+import com.nhnacademy.jdbc.student.domain.Student;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.Optional;
 
-@Slf4j
-public class StudentRepository {
-    void save(StudentDto studentDto){
+public interface StudentRepository {
+    int save(Student student);
 
-        String sql = String.format("insert into jdbc_students(id,name,gender,age) values('%s','%s','%s',%d)",
-                studentDto.getId(),
-                studentDto.getName(),
-                studentDto.getGender(),
-                studentDto.getAge()
-        );
+    Optional<Student> findById(String id);
 
-        try(Connection connection = DbUtils.getConnection();
-            Statement statement = connection.createStatement();
-        ){
-            int result = statement.executeUpdate(sql);
-            log.info("result:{}",result);
-            
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    int update(Student student);
 
-    }
+    int deleteById(String id);
 }

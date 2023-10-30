@@ -17,6 +17,8 @@ public class DbUtils {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        
         return connection;
     }
+
 }
