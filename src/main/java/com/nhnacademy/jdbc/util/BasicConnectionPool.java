@@ -7,26 +7,26 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class BasicConnectionPool  {
-
     private final String jdbcUrl;
     private final String username;
     private final String password;
     private final int maximumPoolSize;
     private final Queue<Connection> connections;
+    private final String driverClassName;
 
     public BasicConnectionPool(String driverClassName, String jdbcUrl, String username, String password, int maximumPoolSize)  {
-
+        this.driverClassName = driverClassName;
         this.jdbcUrl = jdbcUrl;
         this.username = username;
         this.password = password;
         this.maximumPoolSize = maximumPoolSize;
         connections = new LinkedList<>();
 
-        checkDriver(driverClassName);
+        checkDriver();
         initialize();
     }
 
-    private void checkDriver(String driverClassName){
+    private void checkDriver(){
         Class clazz = null;
         try {
             clazz = Class.forName(driverClassName);

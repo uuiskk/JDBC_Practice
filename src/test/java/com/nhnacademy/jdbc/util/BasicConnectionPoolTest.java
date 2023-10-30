@@ -15,7 +15,6 @@ class BasicConnectionPoolTest {
     static Connection connection1;
     static Connection connection2;
     static Connection connection3;
-
     static Connection connection4;
     static Connection connection5;
 
@@ -27,6 +26,15 @@ class BasicConnectionPoolTest {
     @AfterAll
     static void connectionClose() throws SQLException {
         basicConnectionPool.distory();
+    }
+
+    @Test
+    @Order(0)
+    @DisplayName("Driver not found Exception")
+    void init(){
+        Assertions.assertThrows(RuntimeException.class,
+            ()-> new BasicConnectionPool("org.mariadb.jdbc.Driver","jdbcUrl","userName","password",5)
+        );
     }
 
     @Test
@@ -69,5 +77,4 @@ class BasicConnectionPoolTest {
 
         Assertions.assertEquals(basicConnectionPool.getUsedConnectionSize(),0);
     }
-
 }
