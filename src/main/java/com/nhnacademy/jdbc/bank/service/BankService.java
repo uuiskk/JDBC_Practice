@@ -1,34 +1,24 @@
 package com.nhnacademy.jdbc.bank.service;
 
 import com.nhnacademy.jdbc.bank.domain.Account;
-
 import java.sql.Connection;
-import java.util.Optional;
 
-public class BankService {
+public interface BankService {
 
-    public Optional<Account> findByAccountNumber(Connection connection, long accountNumber){
-        //todo 계좌-조회
-        String sql = "select ";
-        return null;
-    }
+    //계좌 조회
+    Account getAccount(Connection connection, long accountNumber);
+    //계좌 생성
+    void createAccount(Connection connection, Account account);
 
-    public int saveAccount(Connection connection, Account account){
-        //todo 계좌-등록
-        return 0;
-    }
+    //예금
+    boolean depositAccount(Connection connection, long accountNumber, long amount);
 
-    void deposit(Connection connection, long accountNumber, long amount){
-        //todo 예금
+    //출금
+    boolean withdrawAccount(Connection connection, long accountNumber, long amount);
 
-    }
+    //송금(이체)
+    void transferAmount(Connection connection, long accountNumberFrom, long accountNumberTo, long amount);
 
-    void withdraw(Connection connection, long accountNumber, long amount){
-        //todo 출금
-
-    }
-
-    void accountTransfer(Connection connection, long accountNumberFrom, long accountNumberTo, long amount){
-        //todo 계좌 이체 accountNumberFrom -> accountNumberTo 으로 amount만큼 이체
-    }
+    //계좌가 존재하면 true 존재하지 않다면 false
+    boolean isExistAccount(Connection connection, long accountNumber);
 }

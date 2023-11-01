@@ -1,13 +1,21 @@
 package com.nhnacademy.jdbc.bank.domain;
 
+import java.util.Objects;
+
 public class Account {
 
-    //계좌번호, 편의를 위해서 1,2,3,4.... n+1 형태로 1씩 증가합니다. , AUTO INCREMENT Primary key
+    //계좌번호, 편의를 위해서 1,2,3,4.... 형식으로 사용합니다.
     private long accountNumber;
     //이름
     private String name;
     //잔고
     private long balance;
+
+    public Account(long accountNumber, String name, long balance) {
+        this.accountNumber = accountNumber;
+        this.name = name;
+        this.balance = balance;
+    }
 
     public long getAccountNumber() {
         return accountNumber;
@@ -21,14 +29,33 @@ public class Account {
         return balance;
     }
 
-    //예금
-    public void deposit(int amount){
-        this.balance += amount;
+    public void setAccountNumber(long accountNumber) {
+        this.accountNumber = accountNumber;
     }
 
-    //출금
-    public void withdraw(int amount){
-        this.balance-=amount;
+    public boolean isWithdraw(long amount){
+        return balance-amount >= 0;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Account account = (Account) o;
+        return accountNumber == account.accountNumber && balance == account.balance && Objects.equals(name, account.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(accountNumber, name, balance);
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "accountNumber=" + accountNumber +
+                ", name='" + name + '\'' +
+                ", balance=" + balance +
+                '}';
+    }
 }
