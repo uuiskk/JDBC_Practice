@@ -38,8 +38,8 @@ class AccountTest {
     void isWithdraw() {
         //출금가능 여부 테스트
         Assertions.assertAll(
-            ()->Assertions.assertTrue(account.isWithdraw(1_000l)),
-            ()->Assertions.assertFalse(account.isWithdraw(20_0000l))
+                ()->Assertions.assertTrue(account.isWithdraw(1_000l)),
+                ()->Assertions.assertFalse(account.isWithdraw(20_0000l))
         );
     }
 

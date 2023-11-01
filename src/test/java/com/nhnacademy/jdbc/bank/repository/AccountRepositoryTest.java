@@ -60,7 +60,7 @@ class AccountRepositoryTest {
     void save_duplicated_pk(){
         Account account = new Account(8000l,"nhn아카데미-8000",10_00000);
         Throwable throwable = Assertions.assertThrows(RuntimeException.class, ()->{
-           accountRepository.save(connection,account);
+            accountRepository.save(connection,account);
         });
         Assertions.assertTrue(throwable.getMessage().contains(SQLIntegrityConstraintViolationException.class.getName()));
         log.debug("message:{}", throwable.getMessage());
