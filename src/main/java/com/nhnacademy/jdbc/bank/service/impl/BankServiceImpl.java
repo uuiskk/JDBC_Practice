@@ -15,7 +15,7 @@ public class BankServiceImpl implements BankService {
 
     private final AccountRepository accountRepository;
 
-    public BankServiceImpl(AccountRepositoryImpl accountRepository) {
+    public BankServiceImpl(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
 
