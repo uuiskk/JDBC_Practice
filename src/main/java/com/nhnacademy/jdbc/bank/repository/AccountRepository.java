@@ -19,4 +19,8 @@ public interface AccountRepository {
     int deposit(Connection connection, long accountNumber, long amount);
     //출금
     int withdraw(Connection connection, long accountNumber, long amount);
+
+    //계좌삭제
+    int deleteByAccountNumber(Connection connection, long accountNumber);
+
 }

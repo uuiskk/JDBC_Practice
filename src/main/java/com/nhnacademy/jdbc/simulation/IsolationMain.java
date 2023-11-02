@@ -14,9 +14,11 @@ import java.sql.SQLException;
 public class IsolationMain {
     static final BankService bankService = new BankServiceImpl(new AccountRepositoryImpl());
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, InterruptedException {
         //todo#1 준비 Account (A,B ) 잔고 : 10_0000
         init();
+
+        Thread.sleep(1000);
 
         //todo#2 A->B에게 만(원) 송금
         Thread threadA = transferThread();
@@ -27,6 +29,8 @@ public class IsolationMain {
         threadB.setName("인출-Thread");
 
         threadA.start();
+        //todo#6 - Thread.sleep(1000)  주석을 걸면 어떻게 될까요?
+        Thread.sleep(1000);
         threadB.start();
 
         //todo#4 threadA, threadB 모두 실행될 때까지 Main Thread 대기.
@@ -47,14 +51,22 @@ public class IsolationMain {
     }
 
     public static void init() throws SQLException {
+        Connection connection = DbUtils.getDataSource().getConnection();
+        connection.setAutoCommit(false);
 
         //todo#1 account (A,B) 잔고 : 10_0000 생성합니다.
         Account accountA = new Account(10000,"nhn아카데미-10000",10_0000l);
         Account accountB = new Account(20000,"nhn아카데미-20000",10_0000l);
-        Connection connection = DbUtils.getDataSource().getConnection();
-        connection.setAutoCommit(false);
+
 
         try{
+            if(bankService.isExistAccount(connection,10000l)){
+                bankService.dropAccount(connection,10000l);
+            }
+            if(bankService.isExistAccount(connection,20000l)){
+                bankService.dropAccount(connection,20000l);
+            }
+
             bankService.createAccount(connection,accountA);
             bankService.createAccount(connection,accountB);
             connection.commit();

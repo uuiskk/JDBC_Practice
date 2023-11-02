@@ -122,4 +122,17 @@ public class BankServiceImpl implements BankService {
         int count =  accountRepository.countByAccountNumber(connection, accountNumber);
         return count > 0;
     }
+
+    @Override
+    public void dropAccount(Connection connection, long accountNumber) {
+        //todo account 삭제
+        if(!isExistAccount(connection,accountNumber)){
+            throw new AccountNotFoundException(accountNumber);
+        }
+        int result = accountRepository.deleteByAccountNumber(connection,accountNumber);
+        if(result<1){
+            throw new RuntimeException("fail-dropAccount:" + accountNumber);
+        }
+    }
+
 }

@@ -21,4 +21,7 @@ public interface BankService {
 
     //계좌가 존재하면 true 존재하지 않다면 false
     boolean isExistAccount(Connection connection, long accountNumber);
+
+    //계좌삭제
+    void dropAccount(Connection connection, long accountNumber);
 }

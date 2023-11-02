@@ -98,5 +98,18 @@ public class AccountRepositoryImpl implements AccountRepository {
             throw new RuntimeException(e);
         }
     }
-    
+
+    @Override
+    public int deleteByAccountNumber(Connection connection, long accountNumber) {
+        //todo 계좌 삭제
+        String sql = "delete from jdbc_account where account_number=?";
+        try(PreparedStatement psmt = connection.prepareStatement(sql)){
+            psmt.setLong(1,accountNumber);
+            int result = psmt.executeUpdate();
+            return result;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

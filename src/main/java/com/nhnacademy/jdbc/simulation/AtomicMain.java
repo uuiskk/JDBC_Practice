@@ -39,7 +39,7 @@ public class AtomicMain {
             //todo4 - rollback
             connection.rollback();
         }
-
+        
         connection.close();
     }
 

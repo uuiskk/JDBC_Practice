@@ -181,4 +181,47 @@ class BankServiceTest {
 
     }
 
+    @Test
+    @Order(13)
+    @DisplayName("Account 삭제")
+    void dropAccount(){
+        Mockito.when(accountRepository.countByAccountNumber(any(),anyLong())).thenReturn(1);
+        Mockito.when(accountRepository.deleteByAccountNumber(any(),anyLong())).thenReturn(1);
+
+        bankService.dropAccount(null,Long.MAX_VALUE);
+
+        Mockito.verify(accountRepository,Mockito.times(1)).countByAccountNumber(any(),anyLong());
+        Mockito.verify(accountRepository,Mockito.times(1)).deleteByAccountNumber(any(),anyLong());
+
+    }
+
+
+    @Test
+    @Order(14)
+    @DisplayName("Account 삭제 - account not found")
+    void dropAccount_account_not_found(){
+        Mockito.when(accountRepository.countByAccountNumber(any(),anyLong())).thenReturn(0);
+        Assertions.assertThrows(AccountNotFoundException.class,()->{
+            bankService.dropAccount(null,Long.MAX_VALUE);
+        });
+
+        Mockito.verify(accountRepository,Mockito.times(1)).countByAccountNumber(any(),anyLong());
+
+    }
+
+    @Test
+    @Order(15)
+    @DisplayName("Account 삭제 - sql error")
+    void dropAccount_query_error(){
+        Mockito.when(accountRepository.countByAccountNumber(any(),anyLong())).thenReturn(1);
+        Mockito.when(accountRepository.deleteByAccountNumber(any(),anyLong())).thenReturn(0);
+        Assertions.assertThrows(RuntimeException.class,()->{
+            bankService.dropAccount(null,Long.MAX_VALUE);
+        });
+
+        Mockito.verify(accountRepository,Mockito.times(1)).countByAccountNumber(any(),anyLong());
+        Mockito.verify(accountRepository,Mockito.times(1)).deleteByAccountNumber(any(),anyLong());
+
+    }
+
 }

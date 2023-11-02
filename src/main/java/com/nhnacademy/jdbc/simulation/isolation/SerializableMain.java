@@ -1,4 +1,4 @@
-package com.nhnacademy.jdbc.simulation;
+package com.nhnacademy.jdbc.simulation.isolation;
 
 import com.nhnacademy.jdbc.bank.domain.Account;
 import com.nhnacademy.jdbc.bank.repository.impl.AccountRepositoryImpl;
@@ -21,6 +21,10 @@ public class SerializableMain {
      */
 
     public static void main(String[] args) throws InterruptedException {
+
+        init();
+        Thread.sleep(1000);
+
         //todo#1 threadA <- Account 조회를 하는 Thread, isolation level = SERIALIZABLE, 10000계좌 조회, 10초후 commit 합니다.
         Thread threadA = new AccountThread(10000,10000);
 
@@ -111,6 +115,31 @@ public class SerializableMain {
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
+            }
+        }
+    }
+
+    public static void init()  {
+        BankService bankService = new BankServiceImpl(new AccountRepositoryImpl());
+        Connection connection = null;
+        try {
+            connection = DbUtils.getDataSource().getConnection();
+            connection.setAutoCommit(false);
+
+            Account account1 = new Account(10000l,"nhn아카데미-10000",10_0000);
+            if(bankService.isExistAccount(connection,account1.getAccountNumber())){
+                bankService.dropAccount(connection,account1.getAccountNumber());
+            }
+            bankService.createAccount(connection,account1);
+
+            connection.commit();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
         }
     }

@@ -25,7 +25,6 @@ class AccountRepositoryTest {
 
         accountRepository.save(connection, account1);
         accountRepository.save(connection, account2);
-
     }
 
     @AfterEach
@@ -108,6 +107,14 @@ class AccountRepositoryTest {
                 ()->Assertions.assertEquals(accountNumber, accountOptional.get().getAccountNumber()),
                 ()->Assertions.assertEquals(9_0000l, accountOptional.get().getBalance())
         );
+    }
+
+    @Test
+    @DisplayName("계좌-삭제")
+    void deleteByAccountNumber(){
+        long accountNumber=8000l;
+        int result = accountRepository.deleteByAccountNumber(connection,accountNumber);
+        Assertions.assertEquals(result,1);
     }
 
 }
