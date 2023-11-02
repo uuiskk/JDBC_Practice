@@ -90,7 +90,7 @@ public class SerializableMain {
             this.wait = wait;
             bankService = new BankServiceImpl(new AccountRepositoryImpl());
         }
-
+        
         @Override
         public void run() {
             Connection connection = null;
