@@ -23,6 +23,7 @@ class StudentRepositoryImplTest {
     static void setUp() throws SQLException {
         //connection 얻기
         connection = DbUtils.getDataSource().getConnection();
+        connection.setAutoCommit(false);
 
         studentRepository = new StudentRepositoryImpl();
 
@@ -39,10 +40,12 @@ class StudentRepositoryImplTest {
         }
 
         studentRepository.deleteById(connection,"student100");
+
     }
 
     @AfterAll
     static void release() throws SQLException {
+        connection.rollback();
         // 사용한 connection은 반납
         if(Objects.nonNull(connection)){
             connection.close();
@@ -91,7 +94,6 @@ class StudentRepositoryImplTest {
         //Assume.assumeFalse(result>0);
 
         Optional<Student> newStudent = studentRepository.findById(connection,student.getId());
-
 
         Assertions.assertAll(
                 ()->Assertions.assertEquals("student1",newStudent.get().getId()),
