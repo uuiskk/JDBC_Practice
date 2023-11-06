@@ -94,6 +94,7 @@ class PreparedStatementStudentRepositoryTest {
         String id="student1";
         int result = studentRepository.deleteById(id);
         Optional<Student> studentDto = studentRepository.findById(id);
+        Assertions.assertEquals(result,1);
         Assertions.assertFalse(studentDto.isPresent());
     }
 
