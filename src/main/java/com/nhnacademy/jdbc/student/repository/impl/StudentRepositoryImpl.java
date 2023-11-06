@@ -1,9 +1,13 @@
 package com.nhnacademy.jdbc.student.repository.impl;
 
+import com.nhnacademy.jdbc.common.Page;
 import com.nhnacademy.jdbc.student.domain.Student;
 import com.nhnacademy.jdbc.student.repository.StudentRepository;
 import lombok.extern.slf4j.Slf4j;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
@@ -27,6 +31,7 @@ public class StudentRepositoryImpl implements StudentRepository {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
     }
 
     @Override
@@ -97,6 +102,94 @@ public class StudentRepositoryImpl implements StudentRepository {
             return result;
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public int deleteAll(Connection connection) {
+        String sql = "delete from jdbc_students";
+
+        try(
+                PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+            int result = statement.executeUpdate();
+            log.debug("result:{}",result);
+            return result;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public long totalCount(Connection connection) {
+
+        String sql = "select count(*) from jdbc_students";
+        ResultSet rs = null;
+
+        try(PreparedStatement psmt = connection.prepareStatement(sql)) {
+            rs = psmt.executeQuery();
+            if(rs.next()){
+                return rs.getLong(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                if(Objects.nonNull(rs)) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return 0l;
+    }
+
+    @Override
+    public Page<Student> findAll(Connection connection, int page, int pageSize) {
+
+        int offset = (page-1) * pageSize;
+        int limit = pageSize;
+        
+        ResultSet rs = null;
+        String sql="select id, name, gender, age, created_at from jdbc_students order by id desc limit  ?,? ";
+        try(PreparedStatement psmt = connection.prepareStatement(sql)) {
+            psmt.setInt(1,offset);
+            psmt.setInt(2,limit);
+            rs= psmt.executeQuery();
+            List<Student> studentList = new ArrayList<>(pageSize);
+
+            while(rs.next()){
+                studentList.add(
+                        new Student(
+                                rs.getString("id"),
+                                rs.getString("name"),
+                                Student.GENDER.valueOf(rs.getString("gender")),
+                                rs.getInt("age"),
+                                rs.getTimestamp("created_at").toLocalDateTime()
+                        )
+                );
+            }
+
+            long total =0;
+
+            if(!studentList.isEmpty()){
+                // size>0 조회 시도, 0이면 조회할 필요 없음, count query는 자원을 많이 소모하는 작업
+                total = totalCount(connection);
+            }
+
+            return  new Page<Student>(studentList,total);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                if(Objects.nonNull(rs)){
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

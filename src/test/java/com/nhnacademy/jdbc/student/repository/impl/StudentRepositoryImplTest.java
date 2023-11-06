@@ -23,13 +23,12 @@ class StudentRepositoryImplTest {
     static void setUp() throws SQLException {
         //connection 얻기
         connection = DbUtils.getDataSource().getConnection();
-
         studentRepository = new StudentRepositoryImpl();
 
         Random random = new Random();
         Iterator<Integer> iterator = random.ints(20,50).iterator();
         for(int i=1; i<=10; i++){
-            String id="student" + i;
+            String id= i + "-student";
             String name="학생" + i;
             Student.GENDER gender = Student.GENDER.M;
             int age =iterator.next();
@@ -91,7 +90,6 @@ class StudentRepositoryImplTest {
         //Assume.assumeFalse(result>0);
 
         Optional<Student> newStudent = studentRepository.findById(connection,student.getId());
-
 
         Assertions.assertAll(
                 ()->Assertions.assertEquals("student1",newStudent.get().getId()),
