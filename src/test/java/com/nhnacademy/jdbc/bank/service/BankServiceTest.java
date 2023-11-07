@@ -23,6 +23,7 @@ import static org.mockito.ArgumentMatchers.anyLong;
 @TestMethodOrder(value = MethodOrderer.OrderAnnotation.class)
 @ExtendWith(MockitoExtension.class)
 class BankServiceTest {
+    //todo#18 BankServiceTest를 실행하고, Test Case가 통과할 수 있도록 BankServiceImpl 서비스를 수정합니다.
 
     @Mock
     AccountRepositoryImpl accountRepository;
