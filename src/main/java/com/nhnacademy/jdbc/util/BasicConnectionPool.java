@@ -49,7 +49,7 @@ public class BasicConnectionPool  {
     }
 
     public void distory() throws SQLException {
-        //todo#5 Connection Pool에 등록된 Connection을 close 합니다.
+        //todo#6 Connection Pool에 등록된 Connection을 close 합니다.
 
     }
 }
