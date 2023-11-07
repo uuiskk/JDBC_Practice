@@ -41,7 +41,6 @@ class ClubRegistrationRepositoryImplTest {
         clubRegistrationRepository.deleteByStudentIdAndClubId(connection,"s4","c2");
         clubRegistrationRepository.deleteByStudentIdAndClubId(connection,"s5","c3");
 
-        connection.commit();
         for(int i=0; i<10; i++){
             String studentId="s"+i;
             String clubId="c"+i;
