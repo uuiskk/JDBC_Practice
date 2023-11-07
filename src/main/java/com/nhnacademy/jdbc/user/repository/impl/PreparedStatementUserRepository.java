@@ -12,7 +12,7 @@ import java.util.Optional;
 public class PreparedStatementUserRepository implements UserRepository {
     @Override
     public Optional<User> findByUserIdAndUserPassword(String userId, String userPassword) {
-
+        //todo#11 -PreparedStatement- 아이디 , 비밀번호가 일치하는 회원조회
         String sql = "select user_id, user_name, user_password from jdbc_users where user_id=? and user_password=?";
         log.debug("sql:{}",sql);
         ResultSet rs = null;
@@ -42,6 +42,7 @@ public class PreparedStatementUserRepository implements UserRepository {
 
     @Override
     public Optional<User> findById(String userId) {
+        //todo#12-PreparedStatement-회원조회
         String sql = "select user_id, user_name, user_password from jdbc_users where user_id=?";
         ResultSet rs = null;
         try(Connection connection = DbUtils.getConnection();
@@ -68,6 +69,7 @@ public class PreparedStatementUserRepository implements UserRepository {
 
     @Override
     public int save(User user) {
+        //todo#13-PreparedStatement-회원저장
         String sql = "insert into jdbc_users (user_id, user_name, user_password) values (?,?,?)";
 
         try(Connection connection = DbUtils.getConnection();
@@ -87,6 +89,7 @@ public class PreparedStatementUserRepository implements UserRepository {
 
     @Override
     public int updateUserPasswordByUserId(String userId, String userPassword) {
+        //todo#14-PreparedStatement-회원정보 수정
         String sql = "update jdbc_users set user_password=? where user_id=?";
         log.debug("sql:{}",sql);
         try(Connection connection = DbUtils.getConnection();
@@ -104,6 +107,7 @@ public class PreparedStatementUserRepository implements UserRepository {
 
     @Override
     public int deleteByUserId(String userId) {
+        //todo#15-PreparedStatement-회원삭제
         String sql = "delete from jdbc_users where user_id=?";
         log.debug("sql:{}",sql);
         try(Connection connection = DbUtils.getConnection();

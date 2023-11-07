@@ -9,13 +9,16 @@ import java.util.Optional;
 @Slf4j
 @TestMethodOrder(value = MethodOrderer.OrderAnnotation.class)
 class PreparedStatementUserRepositoryTest {
+
+    //todo#16--PreparedStatement-를 실행하여 검증합니다.
+
     static UserRepository userRepository;
 
     @BeforeAll
     static void setUp() {
         userRepository = new PreparedStatementUserRepository();
 
-        //todo 테스트가 시작될 때 user1 ~ user10 까지 mysql 데이테이스에 등록하세요.
+        //테스트가 시작될 때 user1 ~ user10 까지 mysql 데이테이스에 등록하세요.
         //user_name = user1 ~ user10, user_name=유저1~유저10, user_password=nhnacademy
         //ex) user1이 존재하면 insert query를 실행하지 않습니다.
 
@@ -40,7 +43,7 @@ class PreparedStatementUserRepositoryTest {
     void findByUserIdAndUserPassword() {
         String id="user1";
         String password="nhnacademy";
-        //todo
+
         Optional<User> userOptional = userRepository.findByUserIdAndUserPassword(id,password);
         Assertions.assertAll(
                 ()->Assertions.assertTrue(userOptional.isPresent()),
@@ -56,7 +59,7 @@ class PreparedStatementUserRepositoryTest {
         String id="user1";
         String password="' or '1'='1";
 
-        //todo
+
         Optional<User> userOptional = userRepository.findByUserIdAndUserPassword(id,password);
         Assertions.assertFalse(userOptional.isPresent());
     }
@@ -66,7 +69,7 @@ class PreparedStatementUserRepositoryTest {
     @DisplayName("find user by id")
     void findById() {
         String id="user1";
-        //todo
+
         Optional<User> userOptional = userRepository.findById(id);
         Assertions.assertAll(
                 ()->Assertions.assertTrue(userOptional.isPresent()),
@@ -77,7 +80,7 @@ class PreparedStatementUserRepositoryTest {
     @Test
     @Order(4)
     void save() {
-        //todo
+
         User newUser = new User("user100","유저100","nhnacademy");
         int result = userRepository.save(newUser);
 
@@ -101,7 +104,7 @@ class PreparedStatementUserRepositoryTest {
     void updateUserPasswordByUserId() {
         String id="user100";
         String newPassword="12345";
-        //todo
+
 
         int result = userRepository.updateUserPasswordByUserId(id,newPassword);
         Assertions.assertEquals(1,result);
@@ -118,7 +121,7 @@ class PreparedStatementUserRepositoryTest {
     @Order(6)
     @DisplayName("delete by userid : user100")
     void deleteByUserId() {
-        //todo delete user :  user100
+
         String id = "user100";
         int result = userRepository.deleteByUserId(id);
         Assertions.assertAll(
