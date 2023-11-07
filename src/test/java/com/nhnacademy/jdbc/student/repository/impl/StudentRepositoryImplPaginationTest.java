@@ -66,6 +66,7 @@ class StudentRepositoryImplPaginationTest {
         Assertions.assertEquals(rows,studentPage.getContent().size());
     }
 
+    // Arguments.of(page, rowCount), 11 page의 rowCount =1
     private static Stream<? extends Arguments> paginationArguments(){
         return Stream.of(
                 Arguments.of(1,10),
