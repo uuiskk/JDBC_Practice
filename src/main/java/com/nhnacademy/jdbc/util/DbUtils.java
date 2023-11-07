@@ -13,25 +13,16 @@ public class DbUtils {
         throw new IllegalStateException("Utility class");
     }
 
-    public static Connection getConnection() {
-        Connection connection = null;
-        try {
-            //todo connection.
-            connection = DriverManager.getConnection("jdbc:mysql://133.186.241.167:3306/nhn_academy_0","nhn_academy_0","1j0OTaJgkS1@$dWl");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        
-        return connection;
-    }
-
     private static final DataSource DATASOURCE;
 
     static {
         BasicDataSource basicDataSource = new BasicDataSource();
-        basicDataSource.setUrl("jdbc:mysql://133.186.241.167:3306/nhn_academy_0");
-        basicDataSource.setUsername("nhn_academy_0");
-        basicDataSource.setPassword("1j0OTaJgkS1@$dWl");
+
+        //todo#0 {ip},{databases},{username},{password}설정
+        basicDataSource.setUrl("jdbc:mysql://{ip}:3306/{database}");
+        basicDataSource.setUsername("{username}");
+        basicDataSource.setPassword("{password}");
+
         basicDataSource.setInitialSize(5);
         basicDataSource.setMaxTotal(5);
         basicDataSource.setMaxIdle(5);
