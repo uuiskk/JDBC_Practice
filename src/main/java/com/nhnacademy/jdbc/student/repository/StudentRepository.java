@@ -14,5 +14,5 @@ public interface StudentRepository {
     int update(Connection connection, Student student);
 
     int deleteById(Connection connection, String id);
-
+    int deleteAll(Connection connection);
 }

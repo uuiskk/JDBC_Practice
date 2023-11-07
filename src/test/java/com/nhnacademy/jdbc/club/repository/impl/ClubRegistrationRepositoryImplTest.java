@@ -20,7 +20,7 @@ import java.util.Random;
 @Slf4j
 @TestMethodOrder(value = MethodOrderer.OrderAnnotation.class)
 class ClubRegistrationRepositoryImplTest {
-
+    //todo#28 - ClubRegistrationRepositoryImplTest 실항하여 Test Case가 통과할 수 있도록 ClubRegistrationRepositoryImpl 구현합니다.
     static Connection connection;
     static ClubRepository clubRepository = new ClubRepositoryImpl();
     static StudentRepository studentRepository = new StudentRepositoryImpl();
@@ -66,6 +66,9 @@ class ClubRegistrationRepositoryImplTest {
         clubRepository.save(connection, club5);
 
         Iterator<Integer> intIterator = new Random().ints(20,30).iterator();
+
+        //student테이브 비우기
+        studentRepository.deleteAll(connection);
 
         //학생 10명 생성
         for(int i=0; i<10; i++){

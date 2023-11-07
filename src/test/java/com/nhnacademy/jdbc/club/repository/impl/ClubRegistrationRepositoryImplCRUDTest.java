@@ -17,6 +17,8 @@ import java.util.List;
 @Slf4j
 class ClubRegistrationRepositoryImplCRUDTest {
 
+    //todo#14 ClubRegistrationRepositoryImplCRUDTest Test Case가 통과할 수 있도록 ClubRegistrationRepositoryImpl 구현합니다.
+
     StudentRepository studentRepository = new StudentRepositoryImpl();
     ClubRegistrationRepository clubRegistrationRepository = new ClubRegistrationRepositoryImpl();
     ClubRepository clubRepository = new ClubRepositoryImpl();

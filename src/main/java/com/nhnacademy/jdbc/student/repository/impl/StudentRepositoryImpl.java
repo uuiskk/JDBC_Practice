@@ -100,4 +100,18 @@ public class StudentRepositoryImpl implements StudentRepository {
         }
     }
 
+    @Override
+    public int deleteAll(Connection connection) {
+        String sql = "delete from jdbc_students";
+        try(
+            PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+            int result = statement.executeUpdate();
+            log.debug("result:{}",result);
+            return result;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

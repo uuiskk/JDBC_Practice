@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 class ClubRepositoryImplTest {
-
+    //todo#8 ClubRepositoryImplTest를 실행하고 테스트 코드가 통과할 수 있도록 ClubRepositoryImpl을 수정하세요.
     Connection connection;
 
     ClubRepository clubRepository;

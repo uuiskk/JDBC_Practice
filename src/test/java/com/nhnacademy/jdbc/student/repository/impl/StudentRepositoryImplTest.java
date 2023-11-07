@@ -26,6 +26,9 @@ class StudentRepositoryImplTest {
         connection.setAutoCommit(false);
 
         studentRepository = new StudentRepositoryImpl();
+        
+        studentRepository.deleteAll(connection);
+
 
         Random random = new Random();
         Iterator<Integer> iterator = random.ints(20,50).iterator();

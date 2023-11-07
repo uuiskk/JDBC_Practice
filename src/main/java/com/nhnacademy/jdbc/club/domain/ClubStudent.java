@@ -3,6 +3,7 @@ package com.nhnacademy.jdbc.club.domain;
 import java.util.Objects;
 
 public class ClubStudent {
+    //todo#2-ClubStudent는 jdbc_students , jdbc_club, jdbc_club_registrations table을 join해서 반환되는 결과를 담기위한 객체입니다.
     private final String studentId;
     private final String stduentName;
 
