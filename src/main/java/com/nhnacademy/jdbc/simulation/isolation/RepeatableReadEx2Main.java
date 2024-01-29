@@ -76,7 +76,6 @@ public class RepeatableReadEx2Main {
         accountB = bankService.getAccount(connection2,newAccountNumber);
 
         //todo#9 connection1에서 insert 된 계좌는 확인할 수 없었지만, update를 통해서 새로운 스냇샵 생성
-        //즉 update에 대해서는 dirty read 발생
         log.debug("================================");
         log.debug("accountB {}", accountB);
         log.debug("================================");
