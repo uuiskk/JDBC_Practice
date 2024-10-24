@@ -65,7 +65,7 @@ public class StatementStudentRepository implements StudentRepository {
     @Override
     public int update(Student student){
         //todo#3 student 수정, name <- 수정합니다.
-        String sql = String.format("update jdbc_students set name = '%s', gender = '%s', age = %d, where id = '%s'",
+        String sql = String.format("update jdbc_students set name = '%s', gender = '%s', age = %d where id = '%s' ",
                 student.getName(),
                 student.getGender(),
                 student.getAge(),
